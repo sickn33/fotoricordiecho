@@ -73,13 +73,13 @@
 
     <script>
         async function loadGallery() {
-            const response = await fetch('https://api.github.com/repos/sickn33/fotoricordiecho/contents');
+            const response = await fetch('https://zx3kf-my.sharepoint.com/personal/sickn33_zx3kf_onmicrosoft_com/_api/v2.0/sites/%7B9684bbcc-00be-4336-b368-23140a8df274%7D/lists/%7B58f82117-6d56-48a3-89a9-8d3b863622cc%7D/items/delta?token=NDslMjM0OyUyMzE7Mzs1OGY4MjExNy02ZDU2LTQ4YTMtODlhOS04ZDNiODYzNjIyY2M7NjM4NjM4ODM4OTMwODcwMDAwOzMwNjEwODQyOTslMjM7JTIzOyUyMzA7JTIz');
             const files = await response.json();
             const gallery = document.getElementById('gallery');
-            files.forEach(file => {
-                if (file.type === 'file' && (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.gif'))) {
+            files.value.forEach(file => {
+                if (file.file.mimeType.startsWith('image/')) {
                     const img = document.createElement('img');
-                    img.src = file.download_url;
+                    img.src = file['@microsoft.graph.downloadUrl'];
                     gallery.appendChild(img);
                 }
             });
