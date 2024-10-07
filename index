@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>ECHO - Galleria Foto e Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ccff99; /* Giallo-verde chiaro */
+            color: #003300; /* Verde scuro per il testo */
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 70px;
+            margin-bottom: 20px;
+            color: #009900; /* Verde medio per il titolo */
+        }
+        p {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        a.button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 24px;
+            color: #ffffff;
+            background-color: #66cc00; /* Verde brillante per il pulsante */
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 0 #559900;
+        }
+        a.button:hover {
+            background-color: #77dd00;
+        }
+        a.button:active {
+            position: relative;
+            top: 5px;
+            box-shadow: none;
+        }
+        /* Stile per l'immagine o il logo */
+        .logo {
+            width: 200px; /* Dimensione dell'immagine */
+            margin-bottom: 20px;
+        }
+        /* Stile per il modulo di caricamento file */
+        form {
+            margin-top: 40px;
+            background-color: #e6ffe6; /* Verde molto chiaro */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="file"] {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #66cc00; /* Verde brillante per il pulsante */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #559900;
+        }
+        button:hover {
+            background-color: #77dd00;
+        }
+        button:active {
+            position: relative;
+            top: 5px;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Aggiungi l'immagine o il logo qui -->
+    <img src="logo.png" alt="Logo ECHO" class="logo">
+    <h1>ECHO</h1>
+    <p>Benvenuto nella nostra galleria condivisa di foto e video!</p>
+    <a href="https://zx3kf-my.sharepoint.com/:f:/g/personal/sickn33_zx3kf_onmicrosoft_com/EgwvvQm5pRVMmxFNy_8EjTkBjZRb2QP-AvZzXmjrVJ8_EA?e=fESbj4" target="_blank" class="button">Accedi alla Galleria</a>
+    
+    <!-- Modulo di caricamento file -->
+    <form id="uploadForm">
+        <input type="file" id="fileInput" multiple>
+        <button type="button" onclick="uploadFiles()">Carica File</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+        async function uploadFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                await uploadFileToSharePoint(file);
+            }
+        }
+
+        async function uploadFileToSharePoint(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await axios.post('URL_DEL_TUO_ENDPOINT_SHAREPOINT', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': 'Bearer IL_TUO_TOKEN_OAUTH'
+                    }
+                });
+
+                if (response.status === 200) {
+                    alert('File caricato con successo');
+                } else {
+                    alert('Errore nel caricamento del file');
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Errore nel caricamento del file');
+            }
+        }
+    </script>
+</body>
+</html>
